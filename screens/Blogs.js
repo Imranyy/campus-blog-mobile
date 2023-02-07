@@ -27,11 +27,13 @@ function Blogs({navigation}) {
         <FlatList
           style={styles.blogContainer}
           data={blogs}
-          keyExtractor={(item)=>item.id}
+          keyExtractor={(item)=>item._id}
           renderItem={({item})=>(
           <TouchableOpacity style={styles.blogItem} onPress={()=>pressHandler(item)}>
             <ImageBackground source={{uri:item.image}} style={styles.image} imageStyle={{ borderRadius: 10}}>
+             <View style={styles.backgoundText}>
               <Text style={styles.text}>{item.title}</Text>
+             </View>
             </ImageBackground>
           </TouchableOpacity>
           )}
@@ -55,12 +57,21 @@ const styles = StyleSheet.create({
       paddingHorizontal:10,
       paddingVertical:8,
     },
+    backgoundText:{
+      backgroundColor:"rgba(0, 0, 0, 0.3)",
+      position: 'absolute',
+      bottom: 0,
+      top:0,
+      left:0,
+      right:0,
+      borderRadius: 10
+    },
     text:{
       color:'white',
       fontSize:18,
-      fontWeight:"bold",
       marginLeft:10,
       position: 'absolute',
+      fontFamily:'roboto-condensed-bold',
       bottom: 10,
     }
   });
