@@ -1,22 +1,37 @@
-import React, {useState} from 'react';
-import {View, Text ,StyleSheet, Button} from "react-native"
+import React from 'react';
+import { Ionicons } from '@expo/vector-icons';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import About from "./About"; 
+import Blogs from './Blogs';
 
+const Tab = createBottomTabNavigator();
 function Home({navigation}) {
-  const pressHandler=()=>{
-    navigation.navigate('About')
-  }
     return (
-        <View style={styles.container}>
-            <Button title='Go to About page' onPress={pressHandler}/>
-        </View>
+        <Tab.Navigator
+          screenOptions={({ route }) => ({
+            tabBarIcon: ({ focused, color, size }) => {
+              let iconName;
+
+              if (route.name === 'Blogs') {
+                iconName = focused
+                  ? 'home'
+                  : 'ios-information-circle-outline';
+              } else if (route.name === 'About') {
+                iconName = focused ? 'ios-list-outline' : 'ios-list';
+              }
+
+              // You can return any component that you like here!
+              return <Ionicons name={iconName} size={size} color={color} />;
+            },
+            tabBarActiveTintColor: 'tomato',
+            tabBarInactiveTintColor: 'gray',
+          })}
+        >
+          <Tab.Screen name="Blogs" component={Blogs} options={{ tabBarBadge: 1 }} />
+          <Tab.Screen name="About" component={About} />
+        </Tab.Navigator>
     );
 }
-const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#E8EAED',
-    },
-    
-  });
+
 
 export default Home;
