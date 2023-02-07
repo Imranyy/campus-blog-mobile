@@ -1,49 +1,27 @@
 import React,{useEffect,useState} from 'react';
-import {StyleSheet, View, TouchableOpacity, ImageBackground,Text,FlatList } from 'react-native';
-import img from '../assets/anime.png';
-import img1 from '../assets/iron.png';
-import img2 from '../assets/scorpion.jpg';
+import {StyleSheet, View, TouchableOpacity, ImageBackground,Text,FlatList,Alert } from 'react-native';
 
 function Blogs({navigation}) {
-    const pressHandler=()=>{
-        navigation.navigate('Blog')
+    const pressHandler=(item)=>{
+        navigation.navigate('Blog',{
+          itemId:item.id,
+          body:item.body
+        })
       }
-      const [blogs, setBlogs]=useState([
-        {
-          id:1,
-          img:img,
-          title:"How to get rich early?",
-          body:'Get money early, kill some dudes.',
-          date:'1/2/2023'
-        },
-        {
-          id:2,
-          img:img1,
-          title:"How to get rich early?",
-          body:'Get money early, kill some dudes.',
-          date:'1/2/2023'
-        },
-        {
-          id:3,
-          img:img2,
-          title:"How to get rich early?",
-          body:'Get money early, kill some dudes.',
-          date:'1/2/2023'
+      const [blogs, setBlogs]=useState([]);
+      const getBlogs=async()=>{
+        try {
+          const url='https://campus-blog.onrender.com/api/blogs';
+          const response=await fetch(url)
+          const parseRes=await response.json()
+          setBlogs(parseRes)
+        } catch (error) {
+          Alert.alert(error.message)
         }
-      ]);
-      // const getBlogs=async()=>{
-  //   try {
-  //     const url=''
-  //     const response=await fetch(url)
-  //     const parseRes=await response.json()
-  //     // setBlogs(parseRes)
-  //   } catch (error) {
-  //     Alert.alert('No internet')
-  //   }
-  // }
-  // useEffect(()=>{
-  //   getBlogs()
-  // },[])
+      }
+      useEffect(()=>{
+        getBlogs()
+      },[])
     return (
     <View style={styles.container}>
         <FlatList
@@ -51,8 +29,8 @@ function Blogs({navigation}) {
           data={blogs}
           keyExtractor={(item)=>item.id}
           renderItem={({item})=>(
-          <TouchableOpacity style={styles.blogItem} onPress={pressHandler}>
-            <ImageBackground source={item.img} style={styles.image} imageStyle={{ borderRadius: 10}}>
+          <TouchableOpacity style={styles.blogItem} onPress={()=>pressHandler(item)}>
+            <ImageBackground source={{uri:item.image}} style={styles.image} imageStyle={{ borderRadius: 10}}>
               <Text style={styles.text}>{item.title}</Text>
             </ImageBackground>
           </TouchableOpacity>

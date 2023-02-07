@@ -15,7 +15,7 @@ function Home({navigation}) {
               if (route.name === 'Blogs') {
                 iconName = focused
                   ? 'home'
-                  : 'ios-information-circle-outline';
+                  : 'home-outline';
               } else if (route.name === 'About') {
                 iconName = focused ? 'ios-list-outline' : 'ios-list';
               }
