@@ -47,18 +47,17 @@ function Blogs({navigation}) {
     return (
     <View style={styles.container}>
         <FlatList
-        style={styles.blogContainer}
-        data={blogs}
-        keyExtractor={(item)=>item.id}
-        renderItem={({item})=>(
+          style={styles.blogContainer}
+          data={blogs}
+          keyExtractor={(item)=>item.id}
+          renderItem={({item})=>(
           <TouchableOpacity style={styles.blogItem} onPress={pressHandler}>
             <ImageBackground source={item.img} style={styles.image} imageStyle={{ borderRadius: 10}}>
               <Text style={styles.text}>{item.title}</Text>
             </ImageBackground>
           </TouchableOpacity>
-        )}
+          )}
         />
-        
     </View>
     );
 }
@@ -69,7 +68,6 @@ const styles = StyleSheet.create({
     },
     blogContainer:{
       paddingHorizontal:1,
-      paddingVertical:20,
     },
     image:{
       height:150,
@@ -77,7 +75,7 @@ const styles = StyleSheet.create({
     blogItem:{
       marginBottom:8,
       paddingHorizontal:10,
-      paddingVertical:10,
+      paddingVertical:8,
     },
     text:{
       color:'white',
